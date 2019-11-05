@@ -36,4 +36,6 @@ dependencies {
     implementation files('libs\\okio-1.8.0.jar')
     implementation files('libs\\TingPhoneOpenSDK_7.0.16.jar')
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
+    implementation 'com.squareup.picasso:picasso:2.3.2'
 }
