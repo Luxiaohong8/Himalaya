@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.lzq.himalaya.adapter.IndicatorAdapter;
 import com.lzq.himalaya.adapter.MainContentAdapter;
+import com.lzq.himalaya.base.BaseActivity;
+import com.lzq.himalaya.base.BaseFragment;
 import com.lzq.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG="MainActivity";
     private MagicIndicator mMagicIndicator;
     private ViewPager mContentPager;

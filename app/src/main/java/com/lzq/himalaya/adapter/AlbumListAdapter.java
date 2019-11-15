@@ -20,6 +20,7 @@ import java.util.List;
 public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.InnerHolder> {
     private List<Album> mData = new ArrayList<>();
     private static final String TAG = "AlbumListAdapter";
+    private OnAlbumItemClickListener mItemClickListener;
 
     @NonNull
     @Override
@@ -30,9 +31,21 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
     }
 
     @Override
-    public void onBindViewHolder(InnerHolder holder, int position) {
+    public void onBindViewHolder(final InnerHolder holder, final int position) {
         //这里是设置数据
-        //holder.itemView.setTag(position);
+        holder.itemView.setTag(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mItemClickListener!=null){
+                    int clickPosition = (int) view.getTag();
+                    mItemClickListener.onItemClick(clickPosition,mData.get(clickPosition));
+                }
+                LogUtil.d(TAG, "holder.itemView click -- > " + view.getTag());
+
+            }
+        });
         holder.setData(mData.get(position));
     }
 
@@ -80,5 +93,13 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
             Picasso.with(itemView.getContext()).load(coverUrlLarge).into(albumCoverIv);
 
         }
+    }
+
+    public void setAlbumItemClickListener(OnAlbumItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public interface OnAlbumItemClickListener {
+        void onItemClick(int position, Album album);
     }
 }

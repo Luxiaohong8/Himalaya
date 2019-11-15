@@ -1,5 +1,6 @@
 package com.lzq.himalaya.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.lzq.himalaya.DetailActivity;
 import com.lzq.himalaya.R;
 import com.lzq.himalaya.adapter.AlbumListAdapter;
 import com.lzq.himalaya.base.BaseFragment;
 import com.lzq.himalaya.interfaces.IRecommendViewCallback;
+import com.lzq.himalaya.presenters.AlbumDetailPresenter;
 import com.lzq.himalaya.presenters.RecommendPresenter;
 import com.lzq.himalaya.utils.Constants;
 import com.lzq.himalaya.utils.LogUtil;
@@ -30,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback,UILoader.OnRetryClickListener,AlbumListAdapter.OnAlbumItemClickListener{
     private static final String TAG="RecommendFragment";
     private View mRootView;
     private RecyclerView mRecommendRv;
@@ -76,6 +79,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         //拿数据
         mRecommendListAdapter=new AlbumListAdapter();
         mRecommendRv.setAdapter(mRecommendListAdapter);
+        mRecommendListAdapter.setAlbumItemClickListener(this);
         return mRootView;
     }
 
@@ -125,5 +129,12 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         if(mRecommendPresenter!=null){
             mRecommendPresenter.getRecommendList();
         }
+    }
+
+    @Override
+    public void onItemClick(int position, Album album) {
+        AlbumDetailPresenter.getInstance().setTargetAlbum(album);
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }
